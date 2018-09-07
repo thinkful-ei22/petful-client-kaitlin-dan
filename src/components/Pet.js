@@ -1,6 +1,11 @@
 import React from 'react'
 
 export default function Pet(props){
+  // console.log(props);
+if(!props.Pet){
+  return <p>No more pets to show</p>
+}
+
   return (
     <section className='col-6'>
       <header>
