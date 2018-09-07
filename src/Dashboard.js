@@ -1,5 +1,7 @@
 import React from 'react';
 import Pet from './components/Pet';
+import { connect } from 'react-redux';
+import { fetchCat, fetchDog } from './actions/index';
 import './grid.css';
 
 let catToAdopt = {
@@ -22,16 +24,25 @@ let dogToAdopt = {
   "story": "Owner passed away."
 }
 
-export default function Dashboard(props) {
-  function handleOnAdoptPet(){
+export class Dashboard extends React.Component {
+  componentDidMount() {
+    this.props.dispatch(fetchCat());
+    this.props.dispatch(fetchDog());
+  }
+  
+  handleOnAdoptPet(){
     console.log('You tried to adopt a pet!');
   }
 
+  
+render(){
   return (
     <main className='row'>
       <h1>Save a <span>Life</span>. Adopt a Pet!</h1>
-        <Pet Pet={catToAdopt} onAdoptPet={() => handleOnAdoptPet()} />
-        <Pet Pet={dogToAdopt} onAdoptPet={() => handleOnAdoptPet()} />
+        <Pet Pet={catToAdopt} onAdoptPet={() => this.handleOnAdoptPet()} />
+        <Pet Pet={dogToAdopt} onAdoptPet={() => this.handleOnAdoptPet()} />
     </main>
-  )
+    )
+  }
 }
+export default connect()(Dashboard);
